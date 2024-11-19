@@ -4,6 +4,5 @@
       "src": "app.py",
       "use": "@vercel/python"
     }
-  ],
-  "pythonVersion": "3.9"
+  ]
 }
