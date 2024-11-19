@@ -75,6 +75,10 @@ def upload_file():
     os.remove(file_path)  # Clean up the uploaded file
     return jsonify({"message": "File uploaded successfully", "context_id": context_id})
 
+@app.route('/')
+def index():
+    return "Backend is running!"
+
 # Route: Ask a Question
 @app.route('/ask', methods=['POST'])
 def ask_question():
