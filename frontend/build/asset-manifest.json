@@ -1,0 +1,19 @@
+{
+  "files": {
+    "main.css": "/persona-chatbot/static/css/main.e6c13ad2.css",
+    "main.js": "/persona-chatbot/static/js/main.d3642751.js",
+    "static/media/Funny.webp": "/persona-chatbot/static/media/Funny.a9ce7743e4c34ca98dc5.webp",
+    "static/media/Motivational.webp": "/persona-chatbot/static/media/Motivational.88aaf8a10c14abb76d54.webp",
+    "static/media/Prompt.webp": "/persona-chatbot/static/media/Prompt.d98af9eb4a371d23318a.webp",
+    "static/media/Sarcastic.webp": "/persona-chatbot/static/media/Sarcastic.c98bc0e25f17d5f0c0b2.webp",
+    "static/media/Helpful.webp": "/persona-chatbot/static/media/Helpful.004505e25797b447339e.webp",
+    "static/media/Wise.webp": "/persona-chatbot/static/media/Wise.defb7cf51890ccfcb020.webp",
+    "index.html": "/persona-chatbot/index.html",
+    "main.e6c13ad2.css.map": "/persona-chatbot/static/css/main.e6c13ad2.css.map",
+    "main.d3642751.js.map": "/persona-chatbot/static/js/main.d3642751.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e6c13ad2.css",
+    "static/js/main.d3642751.js"
+  ]
+}
