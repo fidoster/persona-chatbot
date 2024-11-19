@@ -3,20 +3,15 @@ from pymongo import MongoClient
 from bson.objectid import ObjectId
 import openai
 import os
-from werkzeug.utils import secure_filename
-import PyPDF2
 from pymongo.errors import PyMongoError
 from flask_cors import CORS
 from dotenv import load_dotenv
-import os
 
 load_dotenv()
 
 # Flask app setup
 app = Flask(__name__)
-app.config['UPLOAD_FOLDER'] = 'uploads'
 CORS(app, resources={r"/*": {"origins": "*"}}, allow_headers=["Content-Type", "Authorization"])
-os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
 # MongoDB configuration
 def get_db():
@@ -28,52 +23,12 @@ def get_db():
     
     # Specify the database to use
     return client["edubot"]
+
 # Azure OpenAI Configuration
 openai.api_type = os.getenv("OPENAI_API_TYPE")
 openai.api_key = os.getenv("OPENAI_API_KEY")
 openai.api_base = os.getenv("OPENAI_API_BASE")
 openai.api_version = os.getenv("OPENAI_API_VERSION")
-
-# Extract text from uploaded PDF
-def extract_text_from_pdf(pdf_path):
-    text = ""
-    try:
-        with open(pdf_path, "rb") as f:
-            pdf_reader = PyPDF2.PdfReader(f)
-            for page in pdf_reader.pages:
-                text += page.extract_text()
-    except Exception as e:
-        print(f"Error reading PDF: {e}")
-    return text
-
-# Route: Upload PDF
-@app.route('/upload', methods=['POST'])
-def upload_file():
-    if 'file' not in request.files:
-        return jsonify({"error": "No file uploaded"}), 400
-
-    file = request.files['file']
-    if file.filename == '':
-        return jsonify({"error": "No file selected"}), 400
-
-    filename = secure_filename(file.filename)
-    file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-    file.save(file_path)
-
-    # Extract text from PDF
-    extracted_text = extract_text_from_pdf(file_path)
-
-    if not extracted_text.strip():
-        os.remove(file_path)  # Clean up the uploaded file if extraction fails
-        return jsonify({"error": "Failed to extract text from the PDF"}), 400
-
-    # Store context in MongoDB
-    db = get_db()
-    result = db.contexts.insert_one({"content": extracted_text, "filename": filename})
-    context_id = str(result.inserted_id)
-
-    os.remove(file_path)  # Clean up the uploaded file
-    return jsonify({"message": "File uploaded successfully", "context_id": context_id})
 
 @app.route('/')
 def index():
@@ -113,7 +68,6 @@ def ask_question():
     except Exception as e:
         return jsonify({"error": f"OpenAI API error: {e}"}), 500
 
-
 # Route: Fetch Chat History
 @app.route('/history', methods=['GET'])
 def get_history():
@@ -123,7 +77,6 @@ def get_history():
         return jsonify(history), 200
     except PyMongoError as e:
         return jsonify({"error": f"Database error: {e}"}), 500
-
 
 if __name__ == '__main__':
     port = int(os.getenv('PORT', 5000))
