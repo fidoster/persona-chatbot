@@ -1,3 +1,8 @@
 {
-  "rewrites": [{ "source": "/(.*)", "destination": "/" }]
+  "rewrites": [
+    {
+      "source": "/ask",
+      "destination": "https://persona-chatbot-26mz-5l532z1ug-farhans-projects-fb4e3c80.vercel.app/ask"
+    }
+  ]
 }
