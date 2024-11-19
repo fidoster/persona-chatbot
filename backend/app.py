@@ -29,10 +29,10 @@ def get_db():
     # Specify the database to use
     return client["edubot"]
 # Azure OpenAI Configuration
-openai.api_type = "azure"
-openai.api_key = "3sTRPbHgK5gGUNWgWf7ixVwNvYHdF2eFYkww76yargG21AZXEBWlJQQJ99AKAC5RqLJXJ3w3AAABACOG6CLP"
-openai.api_base = "https://myai-chatbot.openai.azure.com/"
-openai.api_version = "2023-05-15"  # Use the correct API version
+openai.api_type = os.getenv("OPENAI_API_TYPE")
+openai.api_key = os.getenv("OPENAI_API_KEY")
+openai.api_base = os.getenv("OPENAI_API_BASE")
+openai.api_version = os.getenv("OPENAI_API_VERSION")
 
 # Extract text from uploaded PDF
 def extract_text_from_pdf(pdf_path):
